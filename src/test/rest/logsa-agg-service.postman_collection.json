@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "e273f9ca-50b2-4134-8a73-764a8521929c",
+		"name": "logsa-agg-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAggData",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "rate",
+						"value": "5",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "date",
+						"value": "2021-02-25",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": "http://127.0.0.1:8080/aggData"
+			},
+			"response": []
+		},
+		{
+			"name": "postLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ts\":1626731272, \"ip\":\"86.244.221.47\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8080/login"
+			},
+			"response": []
+		},
+		{
+			"name": "postLoginData",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "rate",
+						"type": "text",
+						"value": "5"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8080/loginData"
+			},
+			"response": []
+		}
+	]
+}

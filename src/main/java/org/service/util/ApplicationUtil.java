@@ -54,7 +54,12 @@ public class ApplicationUtil {
 	
 	public static String getCountryCode(String ip) {
 		try {
-			File database = getFile();
+			File database;
+			database = new File("./src/main/resources/geoip2/GeoLite2-Country.mmdb");
+			if (!database.canExecute()) {
+				database = getFile();
+			}
+			
 			Builder b = new Builder(database);
 			b.withCache(new CHMCache(256));
 			DatabaseReader reader;

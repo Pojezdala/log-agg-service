@@ -73,7 +73,6 @@ public class ApplicationController implements ApplicationApi {
 		log.info("<postLoginData> Call /execute headers, rate: {}", rate);
 		
 		ResponseEntity<HttpStatus> result = null;
-		List<HttpStatus> httpStatuses = new ArrayList<HttpStatus>();
 		
 		if (rate == null || rate == 0) {
 			rate = 1;
@@ -81,15 +80,9 @@ public class ApplicationController implements ApplicationApi {
 
 		for (int i = 0; i < rate; i++) {
 			result = logsAggService.createPostRequest();
-			httpStatuses.add(result.getStatusCode());
 		}
 
-		for (HttpStatus httpStatus : httpStatuses) {
-			if (!httpStatus.equals(HttpStatus.OK)) {
-				return new ResponseEntity<>(httpStatus);
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(result.getStatusCode());
 	}
 	
 	private List<AggLogEntity> setOrder(List<AggLogEntity> aggData) {
