@@ -38,27 +38,26 @@ public class LogsAggService {
 
 		@Override
 		public AggLogEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
-			AggLogEntity res = new AggLogEntity();
-			res.date(rs.getString("date"))
-					.country(rs.getString("country")).logins(rs.getString("COUNT(*)"));
+			AggLogEntity res = new AggLogEntity(rs.getString("date"), rs.getString("country"), rs.getString("COUNT(*)"));
 			return res;
 		}
 	}
 	
 	public List<AggLogEntity> selectAggData(String date, Integer rate) {
 		String sql = "SELECT id, country, date, COUNT(*) FROM agg_log_data ";
+		
 		if (date != null && !date.isEmpty()) {
-		sql = sql + "WHERE date="+"'"+date+"'";
+			sql = sql + "WHERE date=" + "'" + date + "'";
 		}
-		
+
 		sql = sql + " GROUP BY country ORDER BY 4 DESC ";
-		
-		if (rate != null && rate!=0) {
-		sql = sql + "LIMIT " + rate;
+
+		if (rate != null && rate != 0) {
+			sql = sql + "LIMIT " + rate;
 		}
-		
+
 		log.info("<selectAggData> Call SQL script : {}", sql);
-		List<AggLogEntity> aggData = (List<AggLogEntity>)jdbcTemplate.query(sql, new AggEntityRowMapper());
+		List<AggLogEntity> aggData = (List<AggLogEntity>) jdbcTemplate.query(sql, new AggEntityRowMapper());
 		return aggData;
 	}
 	
@@ -88,7 +87,7 @@ public class LogsAggService {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode rootNode = mapper.createObjectNode();
 
-		rootNode.put("ts", ApplicationUtil.getRandomTs());
+		rootNode.put("ts", ApplicationUtil.getRandomTimestamp());
 		rootNode.put("ip", ApplicationUtil.getRandomIp());
 		
 		final String uri = "http://127.0.0.1:8080/login";

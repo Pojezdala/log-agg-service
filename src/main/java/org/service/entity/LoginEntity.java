@@ -16,29 +16,17 @@ public class LoginEntity implements Serializable {
 
 	private String ip = null;
 
-
-	/**
-	 * Get dataResponse
-	 *
-	 * @return dataResponse
-	 */
-	public LoginEntity dataResponse() {
+	public LoginEntity loginEntity() {
 		this.ts = getTs();
 		this.ip = getIp();
 		return this;
 	}
 	
-	public LoginEntity dataResponse(LoginEntity data) {
+	public LoginEntity loginEntity(LoginEntity data) {
 		this.ts = data.getTs();
 		this.ip = data.getIp();
 		return this;
 	}
-	
-	/**
-	 * Get Timestamp
-	 *
-	 * @return press
-	 */
 	
 	public LoginEntity ts(Long ts) {
 		this.ts = ts;
@@ -53,11 +41,6 @@ public class LoginEntity implements Serializable {
 		this.ts = ts;
 	}
 
-	/**
-	 * Get Ip
-	 *
-	 * @return press
-	 */
 	public LoginEntity ip(String ip) {
 		this.ip = ip;
 		return this;
@@ -79,9 +62,9 @@ public class LoginEntity implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		LoginEntity DataResponseReply = (LoginEntity) o;
-		return Objects.equals(this.ts, DataResponseReply.ts)
-				&& Objects.equals(this.ip, DataResponseReply.ip);
+		LoginEntity loginEntity = (LoginEntity) o;
+		return Objects.equals(this.ts, loginEntity.ts)
+				&& Objects.equals(this.ip, loginEntity.ip);
 	}
 
 	@Override

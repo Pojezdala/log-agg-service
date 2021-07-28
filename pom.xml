@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <groupId>org</groupId>
-  <artifactId>service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>log-agg-service</artifactId>
+  <version>0.0.1</version>
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
 
@@ -72,6 +72,14 @@
 			<artifactId>geoip2</artifactId>
 			<version>2.15.0</version>
 		</dependency>
+
+		<!-- Apache Commons IO -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

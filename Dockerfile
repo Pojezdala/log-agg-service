@@ -1,4 +1,4 @@
 FROM openjdk:8
-ADD target/service-0.0.1.jar service-0.0.1.jar
-EXPOSE 8085
-ENTRYPOINT ["java","-jar","service-0.0.1.jar"]
+ADD target/log-agg-service-0.0.1.jar log-agg-service-0.0.1.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","log-agg-service-0.0.1.jar"]

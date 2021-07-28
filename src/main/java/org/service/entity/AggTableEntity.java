@@ -21,27 +21,11 @@ public class AggTableEntity {
 	public AggTableEntity() {
 	}
     
-    public AggTableEntity(String date, String log_order, String country, String logins) {
+    public AggTableEntity(String date, String country) {
         this.date = date;
         this.country = country;
     }
     
-	public AggTableEntity id(Integer id) {
-		this.id = id;
-		return this;
-	}
-	
-	public AggTableEntity date(String date) {
-		this.date = date;
-		return this;
-	}
-	
-	public AggTableEntity country(String country) {
-		this.country = country;
-		return this;
-	}
-	
-
     public int getId() {
         return id;
     }

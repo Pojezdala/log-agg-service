@@ -10,26 +10,12 @@ public class AggLogEntity {
 	    public AggLogEntity() {
 	    }
 	    
-		public AggLogEntity date(String date) {
+	    public AggLogEntity(String date, String country, String logins) {
 			this.date = date;
-			return this;
-		}
-		
-		public AggLogEntity order(int order) {
-			this.order = order;
-			return this;
-		}
-		
-		public AggLogEntity country(String country) {
 			this.country = country;
-			return this;
-		}
-		
-		public AggLogEntity logins(String logins) {
 			this.logins = logins;
-			return this;
-		}
-
+	    }
+	    
 	    public String getDate() {
 			return date;
 		}

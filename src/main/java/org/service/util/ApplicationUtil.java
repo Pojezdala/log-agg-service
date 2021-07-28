@@ -2,6 +2,7 @@ package org.service.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -9,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +30,10 @@ public class ApplicationUtil {
 		return randomIP;
 	}
 
-	public static Long getRandomTs() {
+	public static Long getRandomTimestamp() {
     	Random r = new Random();
-    	Long randomTs =  (long) r.nextInt(1626731272);
+    	long actualTimestamp = System.currentTimeMillis() / 1000;
+    	Long randomTs =  (long) r.nextInt((int) actualTimestamp);
 		return randomTs;
 	}
 	
@@ -50,12 +53,12 @@ public class ApplicationUtil {
 	}
 	
 	public static String getCountryCode(String ip) {
-		File database = new File("./src/main/resources/GeoLite2-Country/GeoLite2-Country.mmdb");
-
-		Builder b = new Builder(database);
-		b.withCache(new CHMCache(256));
-		DatabaseReader reader;
 		try {
+			File database = getFile();
+			Builder b = new Builder(database);
+			b.withCache(new CHMCache(256));
+			DatabaseReader reader;
+			
 			reader = b.build();
 			InetAddress ipAddress = InetAddress.getByName(ip);
 			CountryResponse country = reader.country(ipAddress);
@@ -64,9 +67,30 @@ public class ApplicationUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (GeoIp2Exception e) {
-			e.printStackTrace();
+			log.error("GeoIp2Exception {}", e.getMessage());
 		}
+		
 		return ip;
+	}
+	
+	public static File getFile() throws IOException {
+		ApplicationUtil app = new ApplicationUtil();
+		String fileName = "geoip2/GeoLite2-Country.mmdb";
+		InputStream is = app.getFileFromResourceAsStream(fileName);
+		File file = new File("GeoLite2-Country.mmdb");
+		FileUtils.copyInputStreamToFile(is, file);
+		return file;
+	}
+
+	private InputStream getFileFromResourceAsStream(String fileName) {
+		ClassLoader classLoader = getClass().getClassLoader();
+		InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+		if (inputStream == null) {
+			throw new IllegalArgumentException("file not found! " + fileName);
+		} else {
+			return inputStream;
+		}
 	}
 	
 }

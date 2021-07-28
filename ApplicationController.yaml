@@ -1,0 +1,104 @@
+swagger: '2.0'
+info:
+  description: log-agg-service calls
+  version: 1.0.0
+  title: log-agg-service
+host: localhost:8080
+schemes:
+  - http
+paths:  
+  /aggData:
+    get:
+      tags:
+        - ApplicationController
+      summary: Get aggregate data
+      description: Returns aggregates data
+      produces:
+        - application/json
+      parameters:
+        - name: rate
+          in: header
+          required: false
+          type: integer  
+          description: Set top n logins by country
+        - name: date
+          in: header
+          required: false
+          type: string  
+          description: Set specific date for top n logins, dateFormat 'yyyy-MM-dd'       
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/AggLogEntity'
+        '400':
+          description: Bad request
+  /login:
+    post:
+      tags:
+        - ApplicationController
+      summary: Post login data
+      description: Create login request
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: ""
+          description: The user to create.
+          schema:
+            type: object
+            properties:
+              ts:
+                type: string
+              ip:
+                type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              ts:
+                type: string
+              ip:
+                type: string
+        '400':
+          description: Bad request          
+  /loginData:
+    post:
+      tags:
+        - ApplicationController
+      summary: Post login data
+      description: Create login requests
+      operationId: postRestart
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: rate
+          in: header
+          required: false
+          type: integer  
+          description: Number of logins to create.
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request              
+definitions:
+  AggLogEntity:
+    type: object
+    properties:
+      date:
+        type: string
+      order:
+        type: integer
+        format: int64
+      country:
+        type: string
+      logins:
+        type: integer
+        format: int64

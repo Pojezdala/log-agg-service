@@ -47,7 +47,7 @@ public interface ApplicationApi {
 
 			@ApiResponse(code = 400, message = "Wrong input data format", response = Error.class) })
 
-	@RequestMapping(value = "/execute", produces = { "application/json" }, method = RequestMethod.POST)
+	@RequestMapping(value = "/loginData", produces = { "application/json" }, method = RequestMethod.POST)
 	ResponseEntity<HttpStatus> postLoginData(Integer rate);
 
 }

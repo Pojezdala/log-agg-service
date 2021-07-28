@@ -49,18 +49,12 @@ public class ApplicationController implements ApplicationApi {
 		}
 
 		List<AggLogEntity> aggData = new ArrayList<AggLogEntity>();
-
 		logsAggService.selectAggData(date, rate).forEach(aggData::add);
-
-		int i = 1;
-		for (AggLogEntity aggEnt : aggData) {
-			aggEnt.setOrder(i);
-			i++;
-		}
+		aggData = setOrder(aggData);
 
 		return new ResponseEntity<>(aggData, HttpStatus.OK);
 	}
-
+	
 	@Override
 	public ResponseEntity<LoginEntity> postLogin(@RequestBody LoginEntity data) {
 		log.info("<postLogin> Call /login " + "timestamp: {}, ip: {}", data.getTs(), data.getIp());
@@ -79,15 +73,32 @@ public class ApplicationController implements ApplicationApi {
 		log.info("<postLoginData> Call /execute headers, rate: {}", rate);
 		
 		ResponseEntity<HttpStatus> result = null;
+		List<HttpStatus> httpStatuses = new ArrayList<HttpStatus>();
 		
-		if (rate == null) {
+		if (rate == null || rate == 0) {
 			rate = 1;
 		}
 
 		for (int i = 0; i < rate; i++) {
 			result = logsAggService.createPostRequest();
+			httpStatuses.add(result.getStatusCode());
 		}
-		return new ResponseEntity<>(result.getStatusCode());
+
+		for (HttpStatus httpStatus : httpStatuses) {
+			if (!httpStatus.equals(HttpStatus.OK)) {
+				return new ResponseEntity<>(httpStatus);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	private List<AggLogEntity> setOrder(List<AggLogEntity> aggData) {
+		int i = 1;
+		for (AggLogEntity aggEnt : aggData) {
+			aggEnt.setOrder(i);
+			i++;
+		}
+		return aggData;
 	}
 	
 }
