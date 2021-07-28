@@ -21,7 +21,7 @@ Create library
 mvn package
 ```
 
-Run application
+Run application with default port 8080
 
 ```sh
 mvn spring-boot:run
@@ -36,13 +36,6 @@ mvn spring-boot:run -Dspring-boot.run.arguments=--rate=5
 
 **Docker**
 
-By default, the Docker will expose port 8080.
-
-Create library
-
-```sh
-mvn package
-```
 
 Build docker image
 
@@ -50,16 +43,31 @@ Build docker image
 docker build -f Dockerfile -t log-agg-service .
 ```
 
-Run docker image
+Run application with port 8080
 
 ```sh
 docker run -p 8080:8080 log-agg-service
 ```
 
-Run docker image with 'rate' parameter (The number of login records to be generated.)
+Run application with port 8080 and 'rate' parameter (The number of login records to be generated.)
 
 ```sh
 docker run -p 8080:8080 log-agg-service --rate=5
+```
+
+**Docker-compose**
+
+
+Run application with port 8080
+
+```sh
+docker-compose run -p 8080:8080 log-agg-service
+```
+
+Run application with port 8080 and 'rate' parameter (The number of login records to be generated.)
+
+```sh
+docker-compose run -p 8080:8080 log-agg-service --rate=5
 ```
 
 **Test Application**
