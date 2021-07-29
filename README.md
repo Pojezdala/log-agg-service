@@ -74,6 +74,6 @@ docker-compose run -p 8080:8080 log-agg-service --rate=5
 
 To test the application, you can use any rest client.
 
-The call specification is in the 'ApplicationController.yaml' and file is located: /src/main/resources/rest
+The call specification is in the file that is located: /src/main/resources/rest/ApplicationController.yaml
 
-A test json collection for postman is located: /src/test/rest
+Test json collection for postman is located: /src/test/rest/logsa-agg-service.postman_collection.json
